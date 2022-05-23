@@ -1,6 +1,9 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_tracker_app/screens/home/home_page.dart';
+import 'package:fitness_tracker_app/screens/workouts/workouts_page.dart';
+import 'package:fitness_tracker_app/screens/settings/settings_page.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);
@@ -23,6 +26,11 @@ class _TabBarPageState extends State<TabBarPage> {
     ),
   ];
 
+  Widget _createTabBody(BuildContext context, int index) {
+    final children = [HomePage(), WorkoutsPage(), SettingsScreen()];
+    return children[index];
+  }
+
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -34,25 +42,41 @@ class _TabBarPageState extends State<TabBarPage> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: _tabBarOptions.elementAt(_selectedIndex),
+          child: _createTabBody(context, _selectedIndex),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: ImageIcon(AssetImage("assets/icons/home_icon.png")),
-                label: 'Home'),
-            BottomNavigationBarItem(
-                icon: ImageIcon(AssetImage("assets/icons/workouts_icon.png")),
-                label: 'Workouts'),
-            BottomNavigationBarItem(
-                icon: ImageIcon(AssetImage("assets/icons/settings_icon.png")),
-                label: 'Settings'),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Color.fromARGB(255, 186, 56, 209),
-          onTap: _onTabTapped,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            boxShadow: <BoxShadow>[
+              bottomNavBarBoxShadow(),
+            ],
+          ),
+          child: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage("assets/icons/home_icon.png")),
+                    label: 'Home'),
+                BottomNavigationBarItem(
+                    icon:
+                        ImageIcon(AssetImage("assets/icons/workouts_icon.png")),
+                    label: 'Workouts'),
+                BottomNavigationBarItem(
+                    icon:
+                        ImageIcon(AssetImage("assets/icons/settings_icon.png")),
+                    label: 'Settings'),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Color.fromARGB(255, 186, 56, 209),
+              onTap: _onTabTapped,
+              elevation: 10.0),
         ),
       ),
+    );
+  }
+
+  BoxShadow bottomNavBarBoxShadow() {
+    return const BoxShadow(
+      color: Color.fromARGB(255, 174, 173, 173),
+      blurRadius: 1,
     );
   }
 }
