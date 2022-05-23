@@ -14,6 +14,7 @@ class TabBarPage extends StatefulWidget {
 
 class _TabBarPageState extends State<TabBarPage> {
   int _selectedIndex = 0;
+  int data = 0;
   static const List<Widget> _tabBarOptions = <Widget>[
     Text(
       'Index 0: Home',
@@ -27,7 +28,11 @@ class _TabBarPageState extends State<TabBarPage> {
   ];
 
   Widget _createTabBody(BuildContext context, int index) {
-    final children = [HomePage(), WorkoutsPage(), SettingsScreen()];
+    final children = [
+      HomePage(data: data),
+      WorkoutsPage(data: data),
+      SettingsScreen()
+    ];
     return children[index];
   }
 

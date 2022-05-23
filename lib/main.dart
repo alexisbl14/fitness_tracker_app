@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'Fitness',
         theme: ThemeData(
           textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.black)),
-          fontFamily: 'NotoSansKR',
+          fontFamily: 'Poppins',
           scaffoldBackgroundColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
