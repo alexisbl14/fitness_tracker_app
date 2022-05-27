@@ -32,9 +32,8 @@ dependencies:
   
   #BloC
   flutter_bloc: ^7.0.1
-
-  #Flutter secure storage
-  flutter_secure_storage: ^5.0.2
+  #for time
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/page/tab_bar_page.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

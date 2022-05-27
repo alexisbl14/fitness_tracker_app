@@ -2,7 +2,9 @@
 
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_tracker_app/screens/home/previous_workouts_page.dart';
 
 class HomePage extends StatefulWidget {
   final data;
@@ -34,11 +36,29 @@ class _HomePageState extends State<HomePage> {
               ),
               Text("Let's see how you're doing:",
                   style: TextStyle(fontSize: 20)),
-              const SizedBox(height: 35),
+              const SizedBox(height: 85),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [_completedWorkouts(), _workoutInfo()],
-              )
+              ),
+              SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Center(
+                  child: CupertinoButton(
+                    color: Color.fromARGB(255, 231, 141, 247),
+                    child: Text("Previous Workouts",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400)),
+                    onPressed: (() {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => PreviousWorkoutsPage()));
+                    }),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
