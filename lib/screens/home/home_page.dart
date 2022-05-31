@@ -2,6 +2,7 @@
 
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_tracker_app/screens/home/sign_in_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,57 +17,71 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {
+        _user = user;
+      });
+    });
+  }
+
   int data;
   _HomePageState(this.data);
   @override
   Widget build(BuildContext context) {
-    return const SignInPage();
-    /*
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              Text(
-                "Welcome, Alexis!",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text("Let's see how you're doing:",
-                  style: TextStyle(fontSize: 20)),
-              const SizedBox(height: 85),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [_completedWorkouts(), _workoutInfo()],
-              ),
-              SizedBox(height: 50),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Center(
-                  child: CupertinoButton(
-                    color: Color.fromARGB(255, 231, 141, 247),
-                    child: Text("Previous Workouts",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w400)),
-                    onPressed: (() {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => PreviousWorkoutsPage()));
-                    }),
+    if (_user == null) {
+      return const SignInPage();
+    } else {
+      return SafeArea(
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Text(
+                  "Welcome, ${_user?.displayName}!",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-            ],
+                Text("Let's see how you're doing:",
+                    style: TextStyle(fontSize: 20)),
+                const SizedBox(height: 85),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [_completedWorkouts(), _workoutInfo()],
+                ),
+                SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: CupertinoButton(
+                      color: Color.fromARGB(255, 231, 141, 247),
+                      child: Text("Previous Workouts",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w400)),
+                      onPressed: (() {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => PreviousWorkoutsPage()));
+                      }),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );*/
+      );
+    }
   }
 
   Widget _completedWorkouts() {
