@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/page/tab_bar_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  /*SystemChrome.setPreferredOrientations([
-   DeviceOrientation.portraitUp,
-   DeviceOrientation.portraitDown,
- ]);*/
-  //await Firebase.initializeApp();
-  runApp(MyApp());
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

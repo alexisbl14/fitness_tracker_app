@@ -2,6 +2,7 @@
 
 import 'dart:ffi';
 
+import 'package:fitness_tracker_app/screens/home/sign_in_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/home/previous_workouts_page.dart';
@@ -19,6 +20,8 @@ class _HomePageState extends State<HomePage> {
   _HomePageState(this.data);
   @override
   Widget build(BuildContext context) {
+    return const SignInPage();
+    /*
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -63,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
+    );*/
   }
 
   Widget _completedWorkouts() {
