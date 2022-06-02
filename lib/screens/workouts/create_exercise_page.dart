@@ -26,12 +26,13 @@ class _CreateNewExercisePageState extends State<CreateNewExercisePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Hello World"),
+          title: const Text("New Exercise",
+              style: TextStyle(fontWeight: FontWeight.w500)),
           centerTitle: true,
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Color.fromARGB(255, 123, 192, 224),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -75,7 +76,9 @@ class _CreateNewExercisePageState extends State<CreateNewExercisePage> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(16),
+          child: FloatingActionButton.extended(
             onPressed: () {
               widget.onCreateExercise(Exercise(
                   exercise: _exerciseNameController.text,
@@ -84,7 +87,10 @@ class _CreateNewExercisePageState extends State<CreateNewExercisePage> {
                   reps: int.parse(_repsController.text)));
               Navigator.pop(context);
             },
-            label: const Text("Create Exercise")),
+            label: const Text("Create Exercise"),
+            backgroundColor: Color.fromARGB(255, 123, 192, 224),
+          ),
+        ),
       ),
     );
   }
