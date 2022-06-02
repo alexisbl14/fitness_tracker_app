@@ -110,9 +110,13 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                               onPressed: () {
                                 Navigator.push(
                                     context,
-                                    CupertinoPageRoute(
+                                    MaterialPageRoute(
                                         builder: (context) =>
-                                            CreateNewExercisePage()));
+                                            CreateNewExercisePage(
+                                              onCreateExercise: (exercise) =>
+                                                  setState(() =>
+                                                      _exercises.add(exercise)),
+                                            )));
                               },
                             )
                           ]),
