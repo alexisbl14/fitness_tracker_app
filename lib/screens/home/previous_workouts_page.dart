@@ -16,13 +16,11 @@ class _PreviousWorkoutsPageState extends State<PreviousWorkoutsPage> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.black),
+            centerTitle: true,
+            iconTheme: const IconThemeData(color: Colors.white),
             title: const Text("Previous Workouts",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18)),
-            backgroundColor: Colors.white,
+                style: TextStyle(fontWeight: FontWeight.w500)),
+            backgroundColor: Color.fromARGB(255, 123, 192, 224),
           ),
           body: Column(
             // ignore: prefer_const_literals_to_create_immutables

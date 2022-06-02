@@ -29,11 +29,7 @@ class _TabBarPageState extends State<TabBarPage> {
   ];
 
   Widget _createTabBody(BuildContext context, int index) {
-    final children = [
-      HomePage(data: data),
-      WorkoutsPage(data: data),
-      SettingsScreen()
-    ];
+    final children = [HomePage(), WorkoutsPage(), SettingsScreen()];
     return children[index];
   }
 
@@ -43,12 +39,17 @@ class _TabBarPageState extends State<TabBarPage> {
     });
   }
 
+  final pages = [HomePage(), WorkoutsPage(), SettingsScreen()];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: _createTabBody(context, _selectedIndex),
+        //body: Center(
+        //  child: _createTabBody(context, _selectedIndex),
+        //),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: pages,
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(

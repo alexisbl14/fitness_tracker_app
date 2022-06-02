@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/home/previous_workouts_page.dart';
 
 class HomePage extends StatefulWidget {
-  final data;
-  const HomePage({Key? key, this.data}) : super(key: key);
+  //final data;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState(data);
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  int data;
-  _HomePageState(this.data);
+  //int data;
+  _HomePageState();
   @override
   Widget build(BuildContext context) {
     if (_user == null) {
@@ -44,15 +44,21 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Text(
-                  "Welcome, ${_user?.displayName}!",
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    "Welcome, ${_user?.displayName}!",
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                Text("Let's see how you're doing:",
-                    style: TextStyle(fontSize: 20)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text("Let's see how you're doing:",
+                      style: TextStyle(fontSize: 20)),
+                ),
                 const SizedBox(height: 85),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

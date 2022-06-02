@@ -6,11 +6,11 @@ import 'package:fitness_tracker_app/models/exercise.dart';
 import 'package:fitness_tracker_app/screens/workouts/create_exercise_page.dart';
 
 class WorkoutsPage extends StatefulWidget {
-  final int data;
-  const WorkoutsPage({Key? key, required this.data}) : super(key: key);
+  //final int data;
+  const WorkoutsPage({Key? key}) : super(key: key);
 
   @override
-  State<WorkoutsPage> createState() => _WorkoutsPageState(data);
+  State<WorkoutsPage> createState() => _WorkoutsPageState();
 }
 
 class _WorkoutsPageState extends State<WorkoutsPage> {
@@ -20,28 +20,9 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
   bool startWorkoutVisible = true;
   bool finishWorkoutVisible = false;
 
-  final List<Exercise> _exercises = [
-    Exercise(exercise: "bench", weight: 80, sets: 5, reps: 5),
-    Exercise(exercise: "squat", weight: 115, sets: 5, reps: 5),
-    Exercise(exercise: "lunges", weight: 45, sets: 3, reps: 10),
-    Exercise(exercise: "bench", weight: 80, sets: 5, reps: 5),
-    Exercise(exercise: "squat", weight: 115, sets: 5, reps: 5),
-    Exercise(exercise: "lunges", weight: 45, sets: 3, reps: 10),
-    Exercise(exercise: "bench", weight: 80, sets: 5, reps: 5),
-    Exercise(exercise: "squat", weight: 115, sets: 5, reps: 5),
-    Exercise(exercise: "lunges", weight: 45, sets: 3, reps: 10),
-    Exercise(exercise: "bench", weight: 80, sets: 5, reps: 5),
-    Exercise(exercise: "squat", weight: 115, sets: 5, reps: 5),
-    Exercise(exercise: "lunges", weight: 45, sets: 3, reps: 10),
-    Exercise(exercise: "bench", weight: 80, sets: 5, reps: 5),
-    Exercise(exercise: "squat", weight: 115, sets: 5, reps: 5),
-    Exercise(exercise: "lunges", weight: 45, sets: 3, reps: 10),
-    Exercise(exercise: "bench", weight: 80, sets: 5, reps: 5),
-    Exercise(exercise: "squat", weight: 115, sets: 5, reps: 5),
-    Exercise(exercise: "lunges", weight: 45, sets: 3, reps: 10),
-  ];
+  final List<Exercise> _exercises = [];
 
-  _WorkoutsPageState(this.data);
+  _WorkoutsPageState();
 
   @override
   Widget build(BuildContext context) {
