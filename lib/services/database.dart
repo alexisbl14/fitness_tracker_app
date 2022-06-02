@@ -21,3 +21,11 @@ class DatabaseService {
 
 
 }
+
+//   // create new document for user with ID
+//
+//   // final start = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
+//   // final end = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
+//   // final date = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
+//
+//   await DatabaseService(uid: credential?.idToken).updateUserData(0, 0, 0);

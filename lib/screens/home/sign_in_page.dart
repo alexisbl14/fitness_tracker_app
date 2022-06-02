@@ -6,13 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
 
-  //   // create new document for user with ID
-  //
-  //   // final start = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
-  //   // final end = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
-  //   // final date = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
-  //
-  //   await DatabaseService(uid: credential?.idToken).updateUserData(0, 0, 0);
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
