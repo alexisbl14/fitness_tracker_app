@@ -70,15 +70,15 @@ class _HomePageState extends State<HomePage> {
                   child: Center(
                     child: CupertinoButton(
                       color: Color.fromARGB(255, 231, 141, 247),
-                      child: Text("Previous Workouts",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w400)),
                       onPressed: (() {
                         Navigator.push(
                             context,
                             CupertinoPageRoute(
                                 builder: (context) => PreviousWorkoutsPage()));
                       }),
+                      child: Text("Previous Workouts",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w400)),
                     ),
                   ),
                 ),
