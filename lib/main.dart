@@ -1,3 +1,4 @@
+import 'package:fitness_tracker_app/screens/page/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/page/tab_bar_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,18 +21,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final isLoggedIn = FirebaseAuth.instance.currentUser != null;
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Fitness',
+        title: 'FitnessTracker',
         theme: ThemeData(
           textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.black)),
           fontFamily: 'Poppins',
           scaffoldBackgroundColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        //home: isLoggedIn ? TabBarPage() : OnboardingPage(),
-        home: const TabBarPage());
+        home: const SignInScreen(),
+    );
   }
 }
