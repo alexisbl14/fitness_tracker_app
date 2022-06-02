@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -12,9 +13,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Text("SettingsScreen"),
+        appBar: AppBar(
+          title:
+              Text("Settings", style: TextStyle(fontWeight: FontWeight.w500)),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 123, 192, 224),
         ),
+        body: Center(
+            child: Column(
+          children: [
+            CupertinoButton(
+              child: Text("LOG OUT"),
+              onPressed: () {},
+              color: const Color.fromARGB(255, 231, 141, 247),
+            )
+          ],
+        )),
       ),
     );
   }

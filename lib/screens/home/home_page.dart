@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/home/previous_workouts_page.dart';
 
 class HomePage extends StatefulWidget {
-  final data;
-  const HomePage({Key? key, this.data}) : super(key: key);
+  //final data;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState(data);
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  int data;
-  _HomePageState(this.data);
+  //int data;
+  _HomePageState();
   @override
   Widget build(BuildContext context) {
     if (_user == null) {
