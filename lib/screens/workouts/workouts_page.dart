@@ -20,7 +20,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
   bool startWorkoutVisible = true;
   bool finishWorkoutVisible = false;
 
-  final List<Exercise> _exercises = [];
+  List<Exercise> _exercises = [];
 
   _WorkoutsPageState();
 
@@ -86,6 +86,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                               onPressed: () => setState(() {
                                 finishWorkoutVisible = false;
                                 startWorkoutVisible = true;
+                                _exercises = [];
                               }),
                             ),
                             CupertinoButton(
