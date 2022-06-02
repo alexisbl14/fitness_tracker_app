@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               // ignore: prefer_const_literals_to_create_immutables
               children: [
                 Text(
-                  "Welcome, Alexis!",
+                  "Welcome, ${_user?.displayName}!",
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w600,

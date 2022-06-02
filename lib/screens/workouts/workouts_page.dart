@@ -95,8 +95,10 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * .1),
                             CupertinoButton(
                               color: const Color.fromARGB(255, 231, 141, 247),
                               child: const Text("Finish Workout"),
