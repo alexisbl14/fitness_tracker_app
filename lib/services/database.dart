@@ -5,8 +5,19 @@ class DatabaseService {
 
   // collection reference
 
-  final CollectionReference exerciseCollection = FirebaseFirestore.instance.collection('exercises');
+  final String? uid;
+  DatabaseService({this.uid});
 
+  final CollectionReference activityCollection = FirebaseFirestore.instance.collection('activity');
+
+  Future updateUserData(int workoutsCompleted, int workoutsIP, int timeSpent) async {
+    return await activityCollection.doc(uid).set({
+      'workoutsCompleted': workoutsCompleted,
+      'workoutsIP': workoutsIP,
+      'timeSpent': timeSpent
+
+    });
+  }
 
 
 }

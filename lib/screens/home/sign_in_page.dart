@@ -6,22 +6,59 @@ import 'package:google_sign_in/google_sign_in.dart';
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //   // create new document for user with ID
+  //
+  //   // final start = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
+  //   // final end = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
+  //   // final date = Timestamp(DateTime.now().millisecondsSinceEpoch, 0);
+  //
+  //   await DatabaseService(uid: credential?.idToken).updateUserData(0, 0, 0);
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+  static Future<User?> signInWithGoogle({required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    final GoogleSignInAccount? googleSignInAccount =
+    await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      try {
+        final UserCredential userCredential =
+        await auth.signInWithCredential(credential);
+
+        user = userCredential.user;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          // ...
+        } else if (e.code == 'invalid-credential') {
+          // ...
+        }
+      } catch (e) {
+        // ...
+      }
+    }
+
+    return user;
+  }
+
+  static Future<void> signOut({required BuildContext context}) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -32,9 +69,10 @@ class SignInPage extends StatelessWidget {
         child: CupertinoButton(
             child: const Text("Sign-in here"),
             onPressed: () {
-              signInWithGoogle();
+              signInWithGoogle(context: context);
             }),
       ),
     );
   }
+
 }
