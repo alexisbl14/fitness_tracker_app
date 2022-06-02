@@ -70,7 +70,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                 visible: startWorkoutVisible,
                 child: Center(
                   child: CupertinoButton(
-                    color: Colors.lightBlue,
+                    color: Color.fromARGB(255, 123, 192, 224),
                     child: const Text("Start Workout"),
                     onPressed: () => setState(() {
                       startWorkoutVisible = false;
