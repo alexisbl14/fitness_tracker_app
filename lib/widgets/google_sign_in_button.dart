@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../services/FBAuthentication.dart';
+import '../services/database.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   @override
@@ -38,6 +39,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 
           User? user =
           await FBAuthentication.signInWithGoogle(context: context);
+
+
 
           setState(() {
             _isSigningIn = false;

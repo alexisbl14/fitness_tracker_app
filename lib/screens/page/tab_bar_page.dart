@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_tracker_app/screens/page/sign_in_screen.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -40,44 +42,60 @@ class _TabBarPageState extends State<TabBarPage> {
   }
 
   final pages = [HomePage(), WorkoutsPage(), SettingsScreen()];
+
+  User? _user;
+
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {
+        _user = user;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        //body: Center(
-        //  child: _createTabBody(context, _selectedIndex),
-        //),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: pages,
-        ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            boxShadow: <BoxShadow>[
-              bottomNavBarBoxShadow(),
-            ],
+    if (_user == null) {
+      return SignInScreen();
+    } else {
+      return SafeArea(
+        child: Scaffold(
+          //body: Center(
+          //  child: _createTabBody(context, _selectedIndex),
+          //),
+          body: IndexedStack(
+            index: _selectedIndex,
+            children: pages,
           ),
-          child: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/icons/home_icon.png")),
-                    label: 'Home'),
-                BottomNavigationBarItem(
-                    icon:
-                        ImageIcon(AssetImage("assets/icons/workouts_icon.png")),
-                    label: 'Workouts'),
-                BottomNavigationBarItem(
-                    icon:
-                        ImageIcon(AssetImage("assets/icons/settings_icon.png")),
-                    label: 'Settings'),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              boxShadow: <BoxShadow>[
+                bottomNavBarBoxShadow(),
               ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Color.fromARGB(255, 186, 56, 209),
-              onTap: _onTabTapped,
-              elevation: 10.0),
+            ),
+            child: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                      icon: ImageIcon(AssetImage("assets/icons/home_icon.png")),
+                      label: 'Home'),
+                  BottomNavigationBarItem(
+                      icon:
+                      ImageIcon(AssetImage("assets/icons/workouts_icon.png")),
+                      label: 'Workouts'),
+                  BottomNavigationBarItem(
+                      icon:
+                      ImageIcon(AssetImage("assets/icons/settings_icon.png")),
+                      label: 'Settings'),
+                ],
+                currentIndex: _selectedIndex,
+                selectedItemColor: Color.fromARGB(255, 186, 56, 209),
+                onTap: _onTabTapped,
+                elevation: 10.0),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   BoxShadow bottomNavBarBoxShadow() {

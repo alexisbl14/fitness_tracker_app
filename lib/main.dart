@@ -21,19 +21,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final isLoggedIn = FirebaseAuth.instance.currentUser != null;
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Fitness',
+        title: 'FitnessTracker',
         theme: ThemeData(
           textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.black)),
           fontFamily: 'Poppins',
           scaffoldBackgroundColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        //home: isLoggedIn ? TabBarPage() : OnboardingPage(),
-        // home: const TabBarPage());
         home: const SignInScreen(),
     );
   }

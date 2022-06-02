@@ -3,7 +3,8 @@
 import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_tracker_app/screens/home/sign_in_page.dart';
+import 'package:fitness_tracker_app/main.dart';
+import 'package:fitness_tracker_app/screens/page/sign_in_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/home/previous_workouts_page.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (_user == null) {
-      return const SignInPage();
+      return SignInScreen();
     } else {
       return SafeArea(
         child: Scaffold(

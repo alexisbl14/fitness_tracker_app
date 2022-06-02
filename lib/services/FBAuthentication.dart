@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:fitness_tracker_app/services/database.dart';
 
 // https://medium.com/flutter-community/flutter-implementing-google-sign-in-71888bca24ed
 
@@ -39,6 +40,8 @@ class FBAuthentication {
         await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        await DatabaseService(uid: user?.uid).updateUserData(0, 0, 0);
+
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -63,6 +66,8 @@ class FBAuthentication {
         );
       }
     }
+
+
 
     return user;
   }
@@ -92,5 +97,8 @@ class FBAuthentication {
         ),
       );
     }
+
+
   }
+
 }
