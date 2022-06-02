@@ -1,3 +1,4 @@
+import 'package:fitness_tracker_app/screens/home/sign_in_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             CupertinoButton(
               child: Text("LOG OUT"),
-              onPressed: () {},
+              onPressed: () async {
+                await SignInPage.signOut(context: context);
+              },
               color: const Color.fromARGB(255, 231, 141, 247),
             )
           ],
