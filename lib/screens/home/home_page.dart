@@ -44,15 +44,21 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Text(
-                  "Welcome, ${_user?.displayName}!",
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    "Welcome, ${_user?.displayName}!",
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                Text("Let's see how you're doing:",
-                    style: TextStyle(fontSize: 20)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text("Let's see how you're doing:",
+                      style: TextStyle(fontSize: 20)),
+                ),
                 const SizedBox(height: 85),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
