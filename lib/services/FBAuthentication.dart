@@ -10,9 +10,10 @@ import 'package:fitness_tracker_app/services/database.dart';
 
 class FBAuthentication {
 
+  User? get currentUser => FirebaseAuth.instance.currentUser;
+
   static Future<FirebaseApp> initializeFirebase({required BuildContext context}) async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
-    // TODO: Add auto login logic
     return firebaseApp;
   }
 
@@ -40,7 +41,7 @@ class FBAuthentication {
         await auth.signInWithCredential(credential);
 
         user = userCredential.user;
-        await DatabaseService(uid: user?.uid).updateUserData(0, 0, 0);
+        await DatabaseService(uid: user!.uid).updateUserData(0, 0, 0);
 
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
@@ -100,5 +101,6 @@ class FBAuthentication {
 
 
   }
+
 
 }
