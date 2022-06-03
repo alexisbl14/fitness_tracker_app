@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fitness_tracker_app/screens/home/home_page.dart';
 import 'package:fitness_tracker_app/screens/workouts/workouts_page.dart';
+import 'package:fitness_tracker_app/screens/workouts/workouts_page.dart';
 import 'package:fitness_tracker_app/screens/settings/settings_page.dart';
 
 class TabBarPage extends StatefulWidget {
@@ -18,6 +19,8 @@ class TabBarPage extends StatefulWidget {
 class _TabBarPageState extends State<TabBarPage> {
   int _selectedIndex = 0;
   int data = 0;
+  User? _user;
+
   static const List<Widget> _tabBarOptions = <Widget>[
     Text(
       'Index 0: Home',
@@ -43,7 +46,6 @@ class _TabBarPageState extends State<TabBarPage> {
 
   final pages = [HomePage(), WorkoutsPage(), SettingsScreen()];
 
-  User? _user;
 
   void initState() {
     super.initState();
