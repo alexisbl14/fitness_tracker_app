@@ -20,12 +20,20 @@ class DatabaseService {
     // create workouts subcollection if it does not already exist
     FirebaseFirestore.instance.collection('userData').doc(uid).collection('workouts');
 
-    // default population of new user data
-    return await userCollection.doc(uid).set({
-      'workoutsCompleted': workoutsCompleted,
-      'workoutsIP': workoutsIP,
-      'timeSpent': timeSpent,
-    });
+    // check if user exists before setting to 0s on new
+    final snapshot = await userCollection.doc(uid).get();
+    if (snapshot.exists) {
+      return;
+    }
+    else {
+      // default population of new user data
+      return await userCollection.doc(uid).set({
+        'workoutsCompleted': workoutsCompleted,
+        'workoutsIP': workoutsIP,
+        'timeSpent': timeSpent,
+      });
+    }
+
   }
 
   Future updateStats(int newWorkoutsCompleted, int newWorkoutsIP, int newTimeSpent) async {

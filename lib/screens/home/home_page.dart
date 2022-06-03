@@ -97,6 +97,7 @@ class _HomePageState extends State<HomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     // futurebuilder to use async within sync widget
+
     return FutureBuilder(
       future:  DatabaseService(uid: FBAuthentication().currentUser!.uid).getUserStats(),
       builder: (BuildContext context, snapshot) {
@@ -117,7 +118,9 @@ class _HomePageState extends State<HomePage> {
             // convert snapshot to UserData object
             UserData data = snapshot.data as UserData;
 
+
             return Container(
+
               padding: const EdgeInsets.all(15),
               height: 200,
               width: screenWidth * .35,

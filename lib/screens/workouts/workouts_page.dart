@@ -29,9 +29,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
 
   _WorkoutsPageState();
 
-  // Set<Exercise> fromMap(Map<String, dynamic> map) => {
-  //   Exercise(exercise: map['exercise'], weight: map['weight'], sets: map['sets'], reps: map['reps'],)
-  // };
+  ValueNotifier<UserData> homeStats = ValueNotifier(UserData(workoutsCompleted: 0, workoutsIP: 0, timeSpent: 0));
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +113,12 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
 
                                 UserData stats = await DatabaseService(uid: _user!.uid).getUserStats() as UserData;
 
-                                stats.workoutsCompleted += stats.workoutsCompleted + 1;
+                                stats.workoutsCompleted = stats.workoutsCompleted + 1;
                                 var timeSpent = (workout.endTime.millisecondsSinceEpoch - workout.startTime.millisecondsSinceEpoch) ~/ 1000;
                                 timeSpent = timeSpent ~/ 60;
                                 stats.timeSpent += timeSpent;
                                 await DatabaseService(uid: _user!.uid).updateStats(stats.workoutsCompleted, stats.workoutsIP, stats.timeSpent);
-
+                                homeStats.value = stats;
 
                                 setState(() {
                                   _exercises = [];
