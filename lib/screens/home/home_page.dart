@@ -1,20 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_tracker_app/services/FBAuthentication.dart';
-import 'package:fitness_tracker_app/main.dart';
 import 'package:fitness_tracker_app/screens/page/sign_in_screen.dart';
 import 'package:fitness_tracker_app/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_tracker_app/screens/home/previous_workouts_page.dart';
-
 import '../../models/user.dart';
 
 class HomePage extends StatefulWidget {
-  //final data;
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -23,9 +16,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   User? _user;
-  // UserData? stats;
-
-
 
   @override
   void initState() {
@@ -37,14 +27,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  //int data;
   _HomePageState();
   @override
   Widget build(BuildContext context) {
 
+    // if user not signed in, send to launch screen
     if (_user == null) {
-      return SignInScreen();
-    } else {
+      return const SignInScreen();
+    }
+    // otherwise, show homepage
+    else {
+      // header
       return SafeArea(
         child: Scaffold(
           body: Padding(
@@ -57,14 +50,14 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
                     "Welcome, ${_user?.displayName}!",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text("Let's see how you're doing:",
                       style: TextStyle(fontSize: 20)),
                 ),
@@ -73,19 +66,19 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [_completedWorkouts(), _workoutInfo()],
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Center(
                     child: CupertinoButton(
-                      color: Color.fromARGB(255, 231, 141, 247),
+                      color: const Color.fromARGB(255, 231, 141, 247),
                       onPressed: (() {
                         Navigator.push(
                             context,
                             CupertinoPageRoute(
                                 builder: (context) => PreviousWorkoutsPage()));
                       }),
-                      child: Text("Previous Workouts",
+                      child: const Text("Previous Workouts",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w400)),
                     ),
@@ -99,24 +92,30 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // widget pulling stats from firestore to display workout stats
   Widget _completedWorkouts()  {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // futurebuilder to use async within sync widget
     return FutureBuilder(
       future:  DatabaseService(uid: FBAuthentication().currentUser!.uid).getUserStats(),
       builder: (BuildContext context, snapshot) {
 
+        // if snapshot has returned
         if (snapshot.hasData) {
+
+          // if waiting, show circular wait symbol
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Text("waiting..."),
+            return const Center(
+              child: CircularProgressIndicator(),
             );
           }
+
+          // otherwise, populate data
           else {
 
-            debugPrint(snapshot.data!.toString());
+            // convert snapshot to UserData object
             UserData data = snapshot.data as UserData;
-            debugPrint(data.toString());
 
             return Container(
               padding: const EdgeInsets.all(15),
@@ -137,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const SizedBox(width: 10),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Finished",
                       style: TextStyle(fontSize: 18),
@@ -146,8 +145,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(data.workoutsCompleted.toString(),
-                      style: TextStyle(fontSize: 48, fontWeight: FontWeight.w600)),
-                  Text("Completed Workouts",
+                      style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w600)),
+                  const Text("Completed Workouts",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.grey))
                 ],
@@ -155,14 +154,15 @@ class _HomePageState extends State<HomePage> {
             );
           }
         }
+        // If snapshot doing anything it shouldn't, show loader
         else if (snapshot.hasError) {
-          return Text('no data');
+          return const CircularProgressIndicator();
         }
         else if (!snapshot.hasData){
-          return Text("DATA: ${snapshot.data}");
+          return const CircularProgressIndicator();
         }
         else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );
@@ -172,21 +172,23 @@ class _HomePageState extends State<HomePage> {
   Widget _inProgressInfo()  {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // futurebuilder to use async within sync widget
     return FutureBuilder(
       future:  DatabaseService(uid: FBAuthentication().currentUser!.uid).getUserStats(),
       builder: (BuildContext context, snapshot) {
 
+        // if snapshot has returned
         if (snapshot.hasData) {
+          // if waiting, show circular wait symbol
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: Text("waiting..."),
             );
           }
+          // otherwise, populate data
           else {
 
-            debugPrint(snapshot.data!.toString());
             UserData data = snapshot.data as UserData;
-            debugPrint(data.toString());
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -206,7 +208,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
+                  const Text(
                     "In Progress",
                     style: TextStyle(
                       fontSize: 18,
@@ -217,14 +219,14 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text(
                         data.workoutsIP.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Text(
+                      const Text(
                         "Workouts",
                         style: TextStyle(
                           fontSize: 16,
@@ -239,13 +241,13 @@ class _HomePageState extends State<HomePage> {
           }
         }
         else if (snapshot.hasError) {
-          return Text('no data');
+          return const CircularProgressIndicator();
         }
         else if (!snapshot.hasData){
-          return Text("DATA: ${snapshot.data}");
+          return const CircularProgressIndicator();
         }
         else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );
@@ -256,21 +258,23 @@ class _HomePageState extends State<HomePage> {
   Widget _timeSpentInfo()  {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // futurebuilder to use async within sync widget
     return FutureBuilder(
       future:  DatabaseService(uid: FBAuthentication().currentUser!.uid).getUserStats(),
       builder: (BuildContext context, snapshot) {
 
+        // if snapshot has returned
         if (snapshot.hasData) {
+          // if waiting, show circular wait symbol
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text("waiting..."),
             );
           }
+          // else populate data
           else {
 
-            debugPrint(snapshot.data!.toString());
             UserData data = snapshot.data as UserData;
-            debugPrint(data.toString());
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -290,7 +294,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
+                  const Text(
                     "Time Spent",
                     style: TextStyle(
                       fontSize: 18,
@@ -301,14 +305,14 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text(
                         data.timeSpent.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Text(
+                      const Text(
                         "Minutes",
                         style: TextStyle(
                           fontSize: 16,
@@ -323,13 +327,13 @@ class _HomePageState extends State<HomePage> {
           }
         }
         else if (snapshot.hasError) {
-          return Text('no data');
+          return const CircularProgressIndicator();
         }
         else if (!snapshot.hasData){
-          return Text("DATA: ${snapshot.data}");
+          return const CircularProgressIndicator();
         }
         else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );

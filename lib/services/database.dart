@@ -28,6 +28,15 @@ class DatabaseService {
     });
   }
 
+  Future updateStats(int newWorkoutsCompleted, int newWorkoutsIP, int newTimeSpent) async {
+    debugPrint("udpateStats called");
+    return await userCollection.doc(uid).set({
+      'workoutsCompleted': newWorkoutsCompleted,
+      'workoutsIP': newWorkoutsIP,
+      'timeSpent': newTimeSpent,
+    });
+  }
+
   Future addWorkoutData(Workout workout) async {
     var list = workout.exercises;
 
@@ -39,7 +48,7 @@ class DatabaseService {
     });
   }
 
-  Future<List<dynamic>> getPrevworkouts() async {
+  Future<List<dynamic>> getPrevWorkouts() async {
 
     List<dynamic> send = [];
 
@@ -60,7 +69,6 @@ class DatabaseService {
     );
     final docSnap = await ref.get();
     final userData = docSnap.data();
-
     return userData;
   }
 

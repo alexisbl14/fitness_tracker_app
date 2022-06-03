@@ -25,7 +25,7 @@ class _PreviousWorkoutsPageState extends State<PreviousWorkoutsPage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: DatabaseService(uid: FBAuthentication().currentUser!.uid)
-          .getPrevworkouts(),
+          .getPrevWorkouts(),
       builder: (BuildContext context, snapshot) {
 
         if (snapshot.hasData) {
@@ -135,21 +135,3 @@ class _PreviousWorkoutsPageState extends State<PreviousWorkoutsPage> {
       ),
     );
   }
-
-  Widget _buildEx(Exercise exercise) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Exercise: ${exercise.exercise}"),
-            const SizedBox(height: 4),
-            Text("Weight: ${exercise.weight.toString()}"),
-            const SizedBox(height: 4),
-            Text("Sets x Reps: ${exercise.sets} x ${exercise.reps}"),
-          ],
-        ),
-      ),
-    );
-}

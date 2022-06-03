@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_tracker_app/models/user.dart';
 import 'package:fitness_tracker_app/models/workout.dart';
 import 'package:fitness_tracker_app/services/FBAuthentication.dart';
 import 'package:fitness_tracker_app/services/database.dart';
@@ -110,9 +111,16 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                                 _user = FBAuthentication().currentUser;
                                 workout.endTime = DateTime.now();
                                 workout.exercises = _exercises;
-                                debugPrint("before");
                                 await DatabaseService(uid: _user!.uid).addWorkoutData(workout);
-                                debugPrint("after");
+
+                                UserData stats = await DatabaseService(uid: _user!.uid).getUserStats() as UserData;
+
+                                stats.workoutsCompleted += stats.workoutsCompleted + 1;
+                                var timeSpent = (workout.endTime.millisecondsSinceEpoch - workout.startTime.millisecondsSinceEpoch) ~/ 1000;
+                                timeSpent = timeSpent ~/ 60;
+                                stats.timeSpent += timeSpent;
+                                await DatabaseService(uid: _user!.uid).updateStats(stats.workoutsCompleted, stats.workoutsIP, stats.timeSpent);
+
 
                                 setState(() {
                                   _exercises = [];
