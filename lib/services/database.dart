@@ -44,26 +44,11 @@ class DatabaseService {
     List<dynamic> send = [];
 
     final uid = FBAuthentication().currentUser!.uid;
-    final ref = FirebaseFirestore.instance.collection("userData").doc(uid).collection('workouts');
+    final ref = FirebaseFirestore.instance.collection("userData").doc(uid).collection('workouts').orderBy('startTime', descending: true);
     QuerySnapshot snapshot = await ref.get();
 
     final alldata = snapshot.docs.map((doc) => doc.data()).toList();
-
-    // for (var object in alldata) {
-    //   final objMap = object as Map;
-    //   debugPrint("1");
-    //   // final st = DateTime.fromMillisecondsSinceEpoch(objMap['startTime']);
-    //   // final et = DateTime.fromMillisecondsSinceEpoch(objMap['endTime']);
-    //   // final dt = DateTime.fromMillisecondsSinceEpoch(objMap['date']);
-    //   final st = DateTime.now();
-    //   final et = DateTime.now();
-    //   final dt = DateTime.now();
-    //   debugPrint("2");
-    //   send.add(Workout(startTime: st, endTime: et, date: dt, exercises: objMap['exercises']));
-    //   debugPrint("3");
-    // }
-    //
-    // debugPrint("SEND : ${send.toString()}");
+    
     return alldata;
   }
 
