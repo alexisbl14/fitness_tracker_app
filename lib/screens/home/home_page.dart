@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_tracker_app/services/FBAuthentication.dart';

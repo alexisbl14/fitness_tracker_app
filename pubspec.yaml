@@ -76,6 +76,7 @@ flutter:
     - assets/icons/home_icon.png
     - assets/icons/settings_icon.png
     - assets/icons/workouts_icon.png
+    - assets/icons/workout_logo.png
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
