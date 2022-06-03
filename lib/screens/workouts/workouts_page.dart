@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_tracker_app/models/workout.dart';
+import 'package:fitness_tracker_app/services/FBAuthentication.dart';
+import 'package:fitness_tracker_app/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:fitness_tracker_app/models/exercise.dart';
 import 'package:fitness_tracker_app/screens/workouts/create_exercise_page.dart';
 
@@ -14,15 +17,20 @@ class WorkoutsPage extends StatefulWidget {
 }
 
 class _WorkoutsPageState extends State<WorkoutsPage> {
+
   int data = 0;
   String formattedDate = DateFormat.yMMMEd().format(DateTime.now());
-
   bool startWorkoutVisible = true;
   bool finishWorkoutVisible = false;
-
-  List<Exercise> _exercises = [];
+  User? _user;
+  List<Map<String, dynamic>> _exercises = [];
+  Workout workout = Workout(startTime: DateTime.now(), endTime: DateTime.now(), date: DateTime.now(), exercises: [{}]);
 
   _WorkoutsPageState();
+
+  // Set<Exercise> fromMap(Map<String, dynamic> map) => {
+  //   Exercise(exercise: map['exercise'], weight: map['weight'], sets: map['sets'], reps: map['reps'],)
+  // };
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +59,15 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                 visible: startWorkoutVisible,
                 child: Center(
                   child: CupertinoButton(
-                    color: Color.fromARGB(255, 123, 192, 224),
+                    color: const Color.fromARGB(255, 123, 192, 224),
                     child: const Text("Start Workout"),
-                    onPressed: () => setState(() {
-                      startWorkoutVisible = false;
-                      finishWorkoutVisible = true;
-                    }),
+                    onPressed: () {
+                      setState(() {
+                        startWorkoutVisible = false;
+                        finishWorkoutVisible = true;
+                        workout.startTime = DateTime.now();
+                      });
+                    }
                   ),
                 ),
               ),
@@ -69,8 +80,12 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                       child: Scrollbar(
                         child: ListView.builder(
                             itemCount: _exercises.length,
-                            itemBuilder: ((context, index) =>
-                                _buildItem(_exercises[index]))),
+                            itemBuilder: (context, index) {
+                              var item = Exercise(exercise: _exercises[index]['exercise'], weight: _exercises[index]['weight'], sets: _exercises[index]['sets'], reps: _exercises[index]['reps']);
+                              return _buildItem(item);
+                            }
+
+                        ),
                       ),
                     ),
                     Padding(
@@ -79,28 +94,47 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                                width: MediaQuery.of(context).size.width * .1),
+                                width: MediaQuery.of(context).size.width * .03),
                             CupertinoButton(
                               color: const Color.fromARGB(255, 231, 141, 247),
                               child: const Text("Finish Workout"),
-                              onPressed: () => setState(() {
-                                finishWorkoutVisible = false;
-                                startWorkoutVisible = true;
-                                _exercises = [];
-                              }),
+
+                              // button setup
+                              onPressed: () async {
+
+                                setState(() {
+                                  finishWorkoutVisible = false;
+                                  startWorkoutVisible = true;
+                                });
+
+                                _user = FBAuthentication().currentUser;
+                                workout.endTime = DateTime.now();
+                                workout.exercises = _exercises;
+                                debugPrint("before");
+                                await DatabaseService(uid: _user!.uid).addWorkoutData(workout);
+                                debugPrint("after");
+
+                                setState(() {
+                                  _exercises = [];
+                                });
+                              }
                             ),
                             CupertinoButton(
-                              child: Icon(CupertinoIcons.add),
+                              child: const Icon(CupertinoIcons.add),
                               onPressed: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             CreateNewExercisePage(
-                                              onCreateExercise: (exercise) =>
-                                                  setState(() =>
-                                                      _exercises.add(exercise)),
-                                            )));
+                                              onCreateExercise: (exercise) {
+                                                setState(() {
+                                                  _exercises.add(exercise.toMap());
+                                                });
+                                              }
+                                            )
+                                    )
+                                );
                               },
                             )
                           ]),
@@ -133,70 +167,5 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     );
   }
 
-  /*String getDate() {
-    final now = DateTime.now();
-    int weekday = now.weekday;
-    int day = now.day;
-    int month = now.month;
-    int year = now.year;
-    String weekdayString;
-    String monthString;
-    switch (weekday) {
-      case 1:
-        weekdayString = "Monday";
-        break;
-      case 2:
-        weekdayString = "Tuesday";
-        break;
-      case 3:
-        weekdayString = "Wednesday";
-        break;
-      case 4:
-        weekdayString = "Thursday";
-        break;
-      case 5:
-        weekdayString = "Friday";
-        break;
-      case 6:
-        weekdayString = "Saturday";
-        break;
-      case 7:
-        weekdayString = "Sunday";
-        break;
-      default:
-    }
-    switch (month) {
-      case 1:
-        monthString = "January";
-        break;
-      case 2:
-        monthString = "February";
-        break;
-      case 3:
-        monthString = "March";
-        break;
-      case 4:
-        monthString = "April";
-        break;
-      case 5:
-        monthString = "May";
-        break;
-      case 6:
-        monthString = "June";
-        break;
-      case 7:
-        monthString = "July";
-        break;
-      case 8:
-        monthString = "August";
-        break;
-      case 9:
-        monthString = "September";
-        break;
-      case 10:
-        monthString = "October";
-        break;
-      default:
-    }
-  }*/
+
 }
