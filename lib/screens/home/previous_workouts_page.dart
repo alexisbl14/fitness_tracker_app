@@ -81,7 +81,7 @@ class _PreviousWorkoutsPageState extends State<PreviousWorkoutsPage> {
                         height: MediaQuery
                             .of(context)
                             .size
-                            .height * .6,
+                            .height * .85,
                         child: Scrollbar(
                           child: ListView.builder(
                               itemCount: workouts.length,
@@ -103,10 +103,10 @@ class _PreviousWorkoutsPageState extends State<PreviousWorkoutsPage> {
           }
         }
         else if (snapshot.hasError) {
-          return const Text('no data');
+          return const CircularProgressIndicator();
         }
         else if (!snapshot.hasData) {
-          return Text("DATA: ${snapshot.data}");
+          return const CircularProgressIndicator();
         }
         else {
           return const CircularProgressIndicator();

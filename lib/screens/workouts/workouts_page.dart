@@ -94,7 +94,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                                width: MediaQuery.of(context).size.width * .1),
+                                width: MediaQuery.of(context).size.width * .03),
                             CupertinoButton(
                               color: const Color.fromARGB(255, 231, 141, 247),
                               child: const Text("Finish Workout"),
@@ -112,7 +112,6 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                                 workout.exercises = _exercises;
                                 debugPrint("before");
                                 await DatabaseService(uid: _user!.uid).addWorkoutData(workout);
-                                // await DatabaseService(uid: _user!.uid).updateUserData(, workoutsIP, timeSpent)
                                 debugPrint("after");
 
                                 setState(() {
@@ -121,7 +120,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                               }
                             ),
                             CupertinoButton(
-                              child: Icon(CupertinoIcons.add),
+                              child: const Icon(CupertinoIcons.add),
                               onPressed: () {
                                 Navigator.push(
                                     context,
@@ -129,14 +128,10 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                                         builder: (context) =>
                                             CreateNewExercisePage(
                                               onCreateExercise: (exercise) {
-                                                debugPrint("before ex");
                                                 setState(() {
-                                                  _exercises.add(
-                                                      exercise.toMap());
+                                                  _exercises.add(exercise.toMap());
                                                 });
-                                                debugPrint("after ex");
                                               }
-
                                             )
                                     )
                                 );
