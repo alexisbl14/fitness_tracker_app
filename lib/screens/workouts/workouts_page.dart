@@ -28,9 +28,9 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
 
   _WorkoutsPageState();
 
-  Set<Exercise> fromMap(Map<String, dynamic> map) => {
-    Exercise(exercise: map['exercise'], weight: map['weight'], sets: map['sets'], reps: map['reps'],)
-  };
+  // Set<Exercise> fromMap(Map<String, dynamic> map) => {
+  //   Exercise(exercise: map['exercise'], weight: map['weight'], sets: map['sets'], reps: map['reps'],)
+  // };
 
   @override
   Widget build(BuildContext context) {

@@ -19,4 +19,13 @@ class Workout {
         endTime = snapshot.data()['endTime'],
         date = snapshot.data()['date'],
         exercises = snapshot.data()['exercises'];
+
+  Map<String, dynamic> toMap() {
+    return {
+    'startTime': startTime,
+    'endTime': endTime,
+    'date': date,
+    'exercises': exercises
+    };
+  }
 }
